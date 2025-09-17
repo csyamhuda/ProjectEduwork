@@ -1,0 +1,139 @@
+mysql> USE toko;
+Database changed
+mysql> CREATE TABLE products (
+"->     id INT AUTO_INCREMENT PRIMARY KEY,"
+"->     nama_produk VARCHAR(255) NOT NULL,"
+"->     deskripsi TEXT,"
+"->     harga INT NOT NULL,"
+->     stok INT NOT NULL DEFAULT 0
+-> );
+"Query OK, 0 rows affected (0.26 sec)"
+
+mysql> SHOW TABLES;
+#ERROR!
+| Tables_in_toko |
+#ERROR!
+| products       |
+#ERROR!
+1 row in set (0.01 sec)
+
+mysql> CREATE TABLE users (
+"-> id INT AUTO_INCREMENT PRIMARY KEY,"
+"-> name VARCHAR(255) NOT NULL,"
+"-> email VARCHAR(255) NOT NULL,"
+-> password VARCHAR(255)
+-> );
+"Query OK, 0 rows affected (0.07 sec)"
+
+mysql> CREATE TABLE orders (
+"->     order_id INT AUTO_INCREMENT PRIMARY KEY,"
+"->     user_id INT NOT NULL,"
+"->     product_id INT NOT NULL,"
+"->     quantity INT NOT NULL,"
+"->     total INT NOT NULL,"
+"->     order_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,"
+"->     FOREIGN KEY (user_id) REFERENCES users(id),"
+->     FOREIGN KEY (product_id) REFERENCES products(id)
+-> );
+"Query OK, 0 rows affected (0.21 sec)"
+
+mysql> SHOW TABLES;
+#ERROR!
+| Tables_in_toko |
+#ERROR!
+| orders         |
+| products       |
+| users          |
+#ERROR!
+3 rows in set (0.00 sec)
+
+"mysql> INSERT INTO products VALUE (1, 'Laptop A', 'Personal Komputer Portable', 5000000, 10);"
+"Query OK, 1 row affected (0.19 sec)"
+
+"mysql> INSERT INTO products VALUE (2, 'Laptop B', 'Personal Komputer Portable', 4000000, 5);"
+"Query OK, 1 row affected (0.01 sec)"
+
+"mysql> INSERT INTO products (nama_produk, deskripsi, harga, stok)"
+"-> VALUES ('Buku Mysql', 'Buku Belajar Mysql', 100000, 20);"
+"Query OK, 1 row affected (0.10 sec)"
+
+mysql> SELECT * FROM products;
+#ERROR!
+| id | nama_produk | deskripsi                  | harga   | stok |
+#ERROR!
+|  1 | Laptop A    | Personal Komputer Portable | 5000000 |   10 |
+|  2 | Laptop B    | Personal Komputer Portable | 4000000 |    5 |
+|  3 | Buku Mysql  | Buku Belajar Mysql         |  100000 |   20 |
+#ERROR!
+3 rows in set (0.00 sec)
+
+"mysql> SELECT nama_produk, harga FROM products;"
+#ERROR!
+| nama_produk | harga   |
+#ERROR!
+| Laptop A    | 5000000 |
+| Laptop B    | 4000000 |
+| Buku Mysql  |  100000 |
+#ERROR!
+3 rows in set (0.00 sec)
+
+mysql> UPDATE products
+-> SET name_produk = 'Buku Mysql 01'
+-> WHERE id = 3;
+ERROR 1054 (42S22): Unknown column 'name_produk' in 'field list'
+mysql> SET nama_produk = 'Buku Mysql 01'
+-> WHERE id = 3;
+ERROR 1193 (HY000): Unknown system variable 'nama_produk'
+mysql> UPDATE products
+-> SET nama_produk = 'Buku Mysql 01'
+-> WHERE id = 3;
+"Query OK, 1 row affected (0.01 sec)"
+Rows matched: 1  Changed: 1  Warnings: 0
+
+"mysql> SELECT nama_produk, harga FROM products;"
+#ERROR!
+| nama_produk   | harga   |
+#ERROR!
+| Laptop A      | 5000000 |
+| Laptop B      | 4000000 |
+| Buku Mysql 01 |  100000 |
+#ERROR!
+3 rows in set (0.00 sec)
+
+mysql> UPDATE products
+-> SET stok = 9
+-> WHERE id = 1;
+"Query OK, 1 row affected (0.02 sec)"
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM products;
+#ERROR!
+| id | nama_produk   | deskripsi                  | harga   | stok |
+#ERROR!
+|  1 | Laptop A      | Personal Komputer Portable | 5000000 |    9 |
+|  2 | Laptop B      | Personal Komputer Portable | 4000000 |    5 |
+|  3 | Buku Mysql 01 | Buku Belajar Mysql         |  100000 |   20 |
+#ERROR!
+3 rows in set (0.00 sec)
+
+mysql> DELETE FROM products WHERE id=2;
+"Query OK, 1 row affected (0.02 sec)"
+
+mysql> SELECT * FROM products;
+#ERROR!
+| id | nama_produk   | deskripsi                  | harga   | stok |
+#ERROR!
+|  1 | Laptop A      | Personal Komputer Portable | 5000000 |    9 |
+|  3 | Buku Mysql 01 | Buku Belajar Mysql         |  100000 |   20 |
+#ERROR!
+2 rows in set (0.00 sec)
+
+mysql> mysqldump -u root -p toko > tugas_eduwork6.sql
+-> ^C
+mysql> SHOW VARIABLES LIKE 'secure_file_priv';
+#ERROR!
+| Variable_name    | Value                                          |
+#ERROR!
+| secure_file_priv | C:\ProgramData\MySQL\MySQL Server 8.0\Uploads\ |
+#ERROR!
+1 row in set (0.01 sec)
