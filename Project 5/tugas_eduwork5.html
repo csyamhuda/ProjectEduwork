@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Daftar Produk E-Commerce Termurah</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    .filters {
+      margin-bottom: 20px;
+    }
+    .product-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .product {
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      width: 200px;
+      padding: 10px;
+    }
+    .product img {
+      width: 100%;
+      height: auto;
+      border-radius: 4px;
+    }
+    .product h3 {
+      margin: 10px 0 5px;
+    }
+    .product p {
+      margin: 5px 0;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Daftar Produk Termurah Bulan Ini:</h1>
+
+  <div class="filters">
+    <label for="categoryFilter">Filter Kategori: </label>
+    <select id="categoryFilter">
+      <option value="all">Semua</option>
+      <option value="elektronik">Elektronik</option>
+      <option value="fashion">Fashion</option>
+      <option value="makanan">Makanan</option>
+    </select>
+  </div>
+
+  <div class="product-list" id="productList"></div>
+
+  <script>
+    const products = [
+      {
+        nama: "Smartphone iPhone",
+        harga: 2500000,
+        deskripsi: "Smartphone yang canggih dengan kamera 48MP.",
+        gambar: "https://ik.imagekit.io/z5v1mww06/rahul-chakraborty-xsGxhtAsfSA-unsplash.jpg?updatedAt=1745953431115",
+        kategori: "elektronik"
+      },
+      {
+        nama: "Kaos Polos",
+        harga: 50000,
+        deskripsi: "Kaos polos bahan katun combedd 24 S.",
+        gambar: "https://ik.imagekit.io/z5v1mww06/keagan-henman-xPJYL0l5Ii8-unsplash.jpg?updatedAt=1745953431157",
+        kategori: "fashion"
+      },
+      {
+        nama: "Laptop Allienware",
+        harga: 7500000,
+        deskripsi: "Laptop dengan prosesor Intel i12 keluaran terbaru.",
+        gambar: "https://ik.imagekit.io/z5v1mww06/christopher-gower-m_HRfLhgABo-unsplash.jpg?updatedAt=1745953430890",
+        kategori: "elektronik"
+      },
+      {
+        nama: "Keripik Kentang",
+        harga: 15000,
+        deskripsi: "Snack gurih dan renyah namun mengenyangkan di perut.",
+        gambar: "https://ik.imagekit.io/z5v1mww06/henry-perks-Noh1vJJ4uTU-unsplash.jpg?updatedAt=1745953431239",
+        kategori: "makanan"
+      },
+      {
+        nama: "Celana Jeans",
+        harga: 150000,
+        deskripsi: "Celana jeans modis dan nyaman di pakai semua kalangan.",
+        gambar: "https://ik.imagekit.io/z5v1mww06/mnz-m1m2EZOZVwA-unsplash.jpg?updatedAt=1745953546121",
+        kategori: "fashion"
+      }
+    ];
+
+    const productList = document.getElementById("productList");
+    const categoryFilter = document.getElementById("categoryFilter");
+
+    function tampilkanProduk(filteredProducts) {
+      productList.innerHTML = "";
+      filteredProducts.forEach(product => {
+        const item = document.createElement("div");
+        item.className = "product";
+        item.innerHTML = `
+          <img src="${product.gambar}" alt="${product.nama}">
+          <h3>${product.nama}</h3>
+          <p><strong>Rp${product.harga.toLocaleString()}</strong></p>
+          <p>${product.deskripsi}</p>
+        `;
+        productList.appendChild(item);
+      });
+    }
+
+    function filterProduk() {
+      const kategori = categoryFilter.value;
+      const hasilFilter = kategori === "all" ? products : products.filter(p => p.kategori === kategori);
+      tampilkanProduk(hasilFilter);
+    }
+
+    categoryFilter.addEventListener("change", filterProduk);
+
+    // Tampilkan semua produk di awal
+    tampilkanProduk(products);
+  </script>
+
+</body>
+</html>
